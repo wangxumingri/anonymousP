@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--<context:component-scan base-package="com.wxss"/>-->
+
+    <!--配置连接工厂-->
+    <rabbit:connection-factory id="connectionFactory" host="127.0.0.1" port="5672" username="admin" password="admin" virtual-host="test-host1"/>
+    <!--定义-->
+    <!-- 定义mq管理：自动生成交换器，队列等.. -->
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <!-- 声明队列 -->
+    <rabbit:queue name="que_cat" auto-declare="true" durable="true"/>
+    <rabbit:queue name="que_pig" auto-declare="true" durable="true"/>
+
+    <!-- 定义交换机绑定队列（路由模式） -->
+    <rabbit:direct-exchange name="myDirectEX">
+        <rabbit:bindings>
+            <!--绑定的队列及RoutingKey-->
+            <rabbit:binding queue="que_cat" key="que_cat_key"/>
+            <rabbit:binding queue="que_pig" key="que_pig_key"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <!-- 消息对象json转换类 -->
+    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter"/>
+
+    <!-- 定义模版 -->
+    <rabbit:template id="rabbitTemplate" connection-factory="connectionFactory" exchange="myDirectEX" message-converter="jsonMessageConverter" />
+    <!--监听类-->
+    <bean name="catHandler" class="com.wxss.rabbmit.CatListener" />
+    <bean name="pigHandler" class="com.wxss.rabbmit.MouseListener" />
+
+    <!-- 定义消费者监听队列 -->
+    <rabbit:listener-container
+            connection-factory="connectionFactory">
+        <!--需要消费者实现接口-->
+        <rabbit:listener ref="catHandler" queues="que_cat" />
+        <!--<rabbit:listener ref="pigHandler" queues="que_pig" />-->
+        <!--不需要实现接口，由类中指定方法来监听-->
+        <rabbit:listener ref="pigHandler" method="handlerMessage"  queues="que_pig" />
+    </rabbit:listener-container>
+</beans>

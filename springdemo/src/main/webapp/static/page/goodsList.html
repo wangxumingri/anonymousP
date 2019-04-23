@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品列表</title>
+    <script src="/static/vue/vue.js"></script>
+    <script src="/static/jquery/jquery-3.3.1.js"></script>
+    <script>
+        <!--文档就绪函数-->
+        $(function () {
+            $.getJSON("/goods/findAll.do",function (response) {
+                if (response.flag == true ){
+                    alert(response[1]);
+                }
+            })
+        })
+    </script>
+
+</head>
+<body>
+    
+</body>
+
+</html>

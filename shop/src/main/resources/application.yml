@@ -1,0 +1,27 @@
+# server config
+#server:
+#  port: 8088
+# datasource
+spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/spring_boot_demo
+#    url: jdbc:mysql://localhost:3306/spring_boot_demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    # 使用的数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+# mybatis
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  # 实体类的别名
+  type-aliases-package: com.wxss.shop.pojo
+#  config-location: 配置sqlMapConfig.xml
+
+
+
+
+

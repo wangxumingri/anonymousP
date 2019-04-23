@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模板</title>
+    <script src="../js/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script> -->
+    <style>
+    
+
+    </style>
+</head>
+<body>
+
+    <!-- <a href=""></a> -->
+    <button id="btn" v-on:click="test">findAll</button>
+    <script>
+        var vm = new Vue({
+            el:"#btn",
+
+            methods:{
+                test(){
+                    axios.get('../../goods/findAll.do')
+                         .then(function (response) {
+                             console.log("成功");
+                         })
+                         .catch(function (error) {
+                             console.log("失败");
+                        })    
+                }
+            }
+        });
+    </script>
+</body>
+</html>

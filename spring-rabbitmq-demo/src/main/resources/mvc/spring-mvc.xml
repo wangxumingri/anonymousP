@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/mvc
+           http://www.springframework.org/schema/mvc/spring-mvc.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+           ">
+    <!--开启mvc注解-->
+    <context:component-scan base-package="com.wxss"/>
+    <!--<mvc:annotation-driven />-->
+    <!--2.配置视图解析器（可选） -->
+    <!--一般用于mvc的返回值是字符串类型，然后可以通过配置视图解析器，找到指定的视图-->
+    <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--&lt;!&ndash; JSP文件所在的目录 &ndash;&gt;-->
+        <!--<property name="prefix" value="/static/" />-->
+        <!--&lt;!&ndash; 文件的后缀名：mvc的String类型返回值+后缀： list(MVC返回值).jsp(后缀) &ndash;&gt;-->
+        <!--<property name="suffix" value=".jsp" />-->
+        <!--&lt;!&ndash;<property name="contentType">&ndash;&gt;-->
+            <!--&lt;!&ndash;<value>text/html;charset=UTF-8</value>&ndash;&gt;-->
+        <!--&lt;!&ndash;</property>&ndash;&gt;-->
+    <!--</bean>-->
+</beans>

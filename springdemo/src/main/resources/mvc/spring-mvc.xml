@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/mvc
+           http://www.springframework.org/schema/mvc/spring-mvc.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+           ">
+    <!--1.配置注解扫描：-->
+    <!--可否直接设置base-package的值为controller所在包-->
+    <context:component-scan base-package="controller">
+        <!--&lt;!&ndash; 扫描controller的注解，别的不扫描 &ndash;&gt;-->
+        <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+    </context:component-scan>
+    <!--开启mvc注解-->
+    <mvc:annotation-driven />
+
+    <!--fastjson的转换器-->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes" value="application/json"/>
+                <property name="features">
+                    <array>
+                        <value>WriteMapNullValue</value>
+                        <value>WriteDateUseDateFormat</value>
+                    </array>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+
+    <!--2.配置视图解析器（可选） -->
+    <!--一般用于mvc的返回值是字符串类型，然后可以通过配置视图解析器，找到指定的视图-->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- JSP文件所在的目录 -->
+        <property name="prefix" value="/static/" />
+        <!-- 文件的后缀名：mvc的String类型返回值+后缀： list(MVC返回值).jsp(后缀) -->
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <!--3.设置静态资源不过滤 -->
+    <!--如果web.xml中前端控制器内的拦截路径不是拦截所有,比如配的是 *.do ,那么此处可不配，因为，前端控制器只会拦截*.do的资源-->
+    <!--如果使用spring security,需要在spring security的配置文件中配置 ，不拦截的静态资源和 登录注册等页面-->
+    <!--<mvc:resources location="/css/" mapping="/css/**" />-->
+    <!--<mvc:resources location="/img/" mapping="/img/**" />-->
+    <!--<mvc:resources location="/js/" mapping="/js/**" />-->
+    <!--<mvc:resources location="/plugins/" mapping="/plugins/**" />-->
+
+    <!--4.开启对SpringMVC注解的支持 -->
+
+
+    <!--
+        支持AOP的注解支持，AOP底层使用代理技术
+        JDK动态代理，要求必须有接口
+        cglib代理，生成子类对象，proxy-target-class="true" 默认使用cglib的方式
+    -->
+    <!--5.对spring AOP注解支持-->
+    <!--默认为false，使用cglib代理，为true时，使用 JDK代理-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+</beans>

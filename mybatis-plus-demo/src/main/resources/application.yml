@@ -1,0 +1,9 @@
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    # schema: classpath:db/schema.sql
+   #  data: classpath:db/data.sql
+    url: jdbc:mysql://localhost:3306/spring_boot_demo?characterEncoding=UTF-8
+    username: root
+    password: root
