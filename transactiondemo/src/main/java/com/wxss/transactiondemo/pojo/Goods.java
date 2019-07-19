@@ -16,7 +16,7 @@ public class Goods {
     @Id
     @GeneratedValue
     private Integer id;
-    @Column(name="goods_name")
+    @Column(name = "goods_name")
     private String goodsName;
 
     private String title;

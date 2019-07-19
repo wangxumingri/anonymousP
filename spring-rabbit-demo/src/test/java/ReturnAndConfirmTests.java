@@ -33,6 +33,7 @@ public class ReturnAndConfirmTests {
 
     /**
      * 消息发送和消息消费都正常
+     *
      * @throws InterruptedException
      */
     @Test
@@ -47,6 +48,7 @@ public class ReturnAndConfirmTests {
     /**
      * producer--F-->exChange
      * ConfirmCallBack被回调
+     *
      * @throws InterruptedException
      */
     @Test
@@ -62,6 +64,7 @@ public class ReturnAndConfirmTests {
      * producer--T-->exChange--F-->queue
      * 触发ConfirmCallBack
      * 触发ReturnCallBack
+     *
      * @throws InterruptedException
      */
     @Test
@@ -75,6 +78,7 @@ public class ReturnAndConfirmTests {
 
     /**
      * 全错，只有Confirm被回调
+     *
      * @throws InterruptedException
      */
     @Test
@@ -93,15 +97,15 @@ public class ReturnAndConfirmTests {
     public void test5() throws UnsupportedEncodingException {
         Map map = new HashMap();
 
-        map.put("id",3);
-        map.put("name","咖妃噶");
+        map.put("id", 3);
+        map.put("name", "咖妃噶");
         String json = JSONObject.toJSONString(map);
         String msgId = UUID.randomUUID().toString();
         // 设置消息
         Message message = MessageBuilder.withBody(json.getBytes(StandardCharsets.UTF_8)).setContentType(MessageProperties.CONTENT_TYPE_JSON).setCorrelationId(msgId).build();
         // 绑定msgId
         CorrelationData correlationData = new CorrelationData(msgId);
-        rabbitTemplate.convertAndSend(exChange,"CONFIRM_TEST",message,correlationData);
+        rabbitTemplate.convertAndSend(exChange, "CONFIRM_TEST", message, correlationData);
     }
 }
 

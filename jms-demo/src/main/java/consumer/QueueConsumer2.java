@@ -26,7 +26,7 @@ public class QueueConsumer2 {
         consumer.setMessageListener(new MessageListener() {
             @Override
             public void onMessage(Message message) {
-                if (message instanceof TextMessage){
+                if (message instanceof TextMessage) {
                     TextMessage textMessage = (TextMessage) message;
                     try {
                         System.out.println(textMessage.getText());

@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class LockTest {
     @Test
-    public void test1(){
+    public void test1() {
 
     }
 

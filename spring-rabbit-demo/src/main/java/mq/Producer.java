@@ -14,8 +14,8 @@ public class Producer {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void send(String exChange,String routingKey,Object message){
-        rabbitTemplate.convertAndSend(exChange,routingKey,message);
+    public void send(String exChange, String routingKey, Object message) {
+        rabbitTemplate.convertAndSend(exChange, routingKey, message);
     }
 
 }

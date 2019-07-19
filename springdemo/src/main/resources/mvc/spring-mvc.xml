@@ -21,7 +21,7 @@
         <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
     </context:component-scan>
     <!--开启mvc注解-->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven/>
 
     <!--fastjson的转换器-->
     <mvc:annotation-driven>
@@ -43,9 +43,9 @@
     <!--一般用于mvc的返回值是字符串类型，然后可以通过配置视图解析器，找到指定的视图-->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- JSP文件所在的目录 -->
-        <property name="prefix" value="/static/" />
+        <property name="prefix" value="/static/"/>
         <!-- 文件的后缀名：mvc的String类型返回值+后缀： list(MVC返回值).jsp(后缀) -->
-        <property name="suffix" value=".jsp" />
+        <property name="suffix" value=".jsp"/>
     </bean>
 
     <!--3.设置静态资源不过滤 -->

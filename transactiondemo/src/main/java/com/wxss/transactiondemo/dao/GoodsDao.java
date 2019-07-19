@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 /**
  * 不需注解，将该接口注册成bean
  */
-public interface GoodsDao extends JpaRepository<Goods,Integer> , JpaSpecificationExecutor<Goods> {
+public interface GoodsDao extends JpaRepository<Goods, Integer>, JpaSpecificationExecutor<Goods> {
 
     /*
      *  1.我们自己的接口继承spring data jpa 提供的两个接口后,

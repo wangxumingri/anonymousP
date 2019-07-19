@@ -4,7 +4,7 @@ public class Fu {
 
     private int a;
 
-    private static int b=2;
+    private static int b = 2;
 
     static {
         System.out.println("父类第一个静态块");
@@ -14,17 +14,17 @@ public class Fu {
 
     {
         System.out.println("父类第一个普通块");
-       s=test("初始化父类的s");
+        s = test("初始化父类的s");
     }
 
-    private int aa =33;
+    private int aa = 33;
 
-    public Fu(){
+    public Fu() {
         System.out.println("父类构造方法");
-        System.out.println("a="+a+";b="+b+";s="+s);
+        System.out.println("a=" + a + ";b=" + b + ";s=" + s);
     }
 
-    public static int test(String str){
+    public static int test(String str) {
         System.out.println(str);
 
         return 22;

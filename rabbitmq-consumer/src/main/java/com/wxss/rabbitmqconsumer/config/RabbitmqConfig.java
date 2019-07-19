@@ -87,6 +87,7 @@ public class RabbitmqConfig {
 
     /**
      * 将SMS队列绑定到direct交换机上，并指定路由
+     *
      * @param queue
      * @param exchange
      * @return
@@ -98,6 +99,7 @@ public class RabbitmqConfig {
 
     /**
      * 将EMAIL队列绑定到direct交换机上，并指定路由
+     *
      * @param queue
      * @param exchange
      * @return

@@ -11,7 +11,7 @@ import java.util.concurrent.TimeoutException;
  * Author:Created by wx on 2019/4/16
  * Desc:交换类型为direct
  */
-public class  Producer {
+public class Producer {
     public static void main(String[] args) {
         try {
             // 1.创建连接工厂
@@ -21,13 +21,13 @@ public class  Producer {
             Channel channel = connection.createChannel();
             // 4.声明与设置交换器
             String exChangeName = "direct-EX";
-            channel.exchangeDeclare(exChangeName,"direct",true);
+            channel.exchangeDeclare(exChangeName, "direct", true);
             // 5.设置RoutingKey
             String routingKey = "wx";
             // 6.发布消息
             byte[] messageBodyBytes = "hello,this is a message whose routingKey is wx and through by direct-EX".getBytes();
             // 7.发布消息
-            channel.basicPublish(exChangeName,routingKey,null,messageBodyBytes);
+            channel.basicPublish(exChangeName, routingKey, null, messageBodyBytes);
 
             // 8.释放资源
             channel.close();

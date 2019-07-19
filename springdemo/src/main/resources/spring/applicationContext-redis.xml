@@ -26,9 +26,9 @@
         <!-- 在空闲时检查有效性, 默认false -->
         <property name="testWhileIdle" value="${redis.testWhileIdle}"/>
         <!-- 连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true -->
-        <property name="blockWhenExhausted" value="false" />
+        <property name="blockWhenExhausted" value="false"/>
         <!-- 连接空闲多久后释放, 当空闲时间>该值 且 空闲连接>最大空闲连接数 时直接释放 -->
-        <property name="softMinEvictableIdleTimeMillis" value="10000" />
+        <property name="softMinEvictableIdleTimeMillis" value="10000"/>
     </bean>
 
     <!--配置spring提供的连接工厂-->

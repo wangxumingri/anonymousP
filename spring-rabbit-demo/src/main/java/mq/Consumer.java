@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
 public class Consumer implements ChannelAwareMessageListener {
     @Override
     public void onMessage(Message message, Channel channel) throws Exception {
-        try{
-            System.out.println("consumer--:"+message.getMessageProperties()+":"+new String(message.getBody()));
+        try {
+            System.out.println("consumer--:" + message.getMessageProperties() + ":" + new String(message.getBody()));
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
 
 
-        }catch(Exception e){
-            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false,false);
+        } catch (Exception e) {
+            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false);
             e.printStackTrace();
         }
     }

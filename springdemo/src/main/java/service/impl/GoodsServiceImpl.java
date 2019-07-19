@@ -54,7 +54,7 @@ public class GoodsServiceImpl implements GoodsServiceI {
     public List<Goods> findAll() {
         List<Goods> goodsList = (List<Goods>) redisTemplate.opsForHash().get("goods", "goodsList");
 
-        if (goodsList != null && goodsList.size()>0){
+        if (goodsList != null && goodsList.size() > 0) {
             // 缓存中有数据
             System.out.println("从缓存中获取");
             return goodsList;
@@ -63,9 +63,9 @@ public class GoodsServiceImpl implements GoodsServiceI {
         // 缓存中没有
         goodsList = goodsMapper.findAll();
 
-        if (goodsList !=null && goodsList.size()>0){
+        if (goodsList != null && goodsList.size() > 0) {
             // 存入缓存
-            redisTemplate.opsForHash().put("goods","goodsList",goodsList);
+            redisTemplate.opsForHash().put("goods", "goodsList", goodsList);
         }
 
         return goodsList;

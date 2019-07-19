@@ -78,6 +78,7 @@
             <artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
         <!--单元测试-->
         <dependency>
             <groupId>junit</groupId>
@@ -225,9 +226,9 @@
             <version>${mysql.version}</version>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>com.oracle</groupId>-->
-            <!--<artifactId>ojdbc14</artifactId>-->
-            <!--<version>${oracle.version}</version>-->
+        <!--<groupId>com.oracle</groupId>-->
+        <!--<artifactId>ojdbc14</artifactId>-->
+        <!--<version>${oracle.version}</version>-->
         <!--</dependency>-->
         <dependency>
             <groupId>javax.annotation</groupId>

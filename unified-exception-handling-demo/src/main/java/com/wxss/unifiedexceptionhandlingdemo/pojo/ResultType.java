@@ -9,9 +9,9 @@ import lombok.Setter;
  */
 @Getter
 public enum ResultType {
-    SUCCESS(0,"操作成功"),
-    EMPTY(1,"空数据"),
-    ERROR(2,"错误");
+    SUCCESS(0, "操作成功"),
+    EMPTY(1, "空数据"),
+    ERROR(2, "错误");
 
     private int code;
     private String msg;

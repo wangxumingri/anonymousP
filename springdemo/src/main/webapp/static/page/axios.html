@@ -9,30 +9,30 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script> -->
     <style>
-    
+
 
     </style>
 </head>
 <body>
 
-    <!-- <a href=""></a> -->
-    <button id="btn" v-on:click="test">findAll</button>
-    <script>
-        var vm = new Vue({
-            el:"#btn",
+<!-- <a href=""></a> -->
+<button id="btn" v-on:click="test">findAll</button>
+<script>
+    var vm = new Vue({
+        el: "#btn",
 
-            methods:{
-                test(){
-                    axios.get('../../goods/findAll.do')
-                         .then(function (response) {
-                             console.log("成功");
-                         })
-                         .catch(function (error) {
-                             console.log("失败");
-                        })    
-                }
+        methods: {
+            test() {
+                axios.get('../../goods/findAll.do')
+                    .then(function (response) {
+                        console.log("成功");
+                    })
+                    .catch(function (error) {
+                        console.log("失败");
+                    })
             }
-        });
-    </script>
+        }
+    });
+</script>
 </body>
 </html>

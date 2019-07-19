@@ -26,29 +26,29 @@ public class Service {
 //    @Qualifier("myRedisTemplate") // 此时可以不用，虽然创建bean的时候，指定名称，但目前容器内只有一个RedisTemplate
     private RedisTemplate redisTemplate;
 
-    public List<Goods> findAll(){
+    public List<Goods> findAll() {
         // 从缓存中获取数据
-        String goodStr = (String)redisTemplate.opsForValue().get("goods");// Oject
+        String goodStr = (String) redisTemplate.opsForValue().get("goods");// Oject
         // 定义要返回的list
         List<Goods> goodsList = null;
 
-        if (StringUtils.isNotEmpty(goodStr)){
-            System.out.println("从缓存中获取"+goodStr);
+        if (StringUtils.isNotEmpty(goodStr)) {
+            System.out.println("从缓存中获取" + goodStr);
             // 将 JSON串 转成 List
             goodsList = JSONArray.parseArray(goodStr, Goods.class);
 //            goodsList = JSONObject.parseArray(goodStr, Goods.class);
 
-        } else{
+        } else {
             // 缓存中没有数据
             System.out.println("从数据库中查询");
             GoodsExample goodsExample = new GoodsExample();
             goodsList = goodsMapper.selectByExample(goodsExample);
 
-            if (CollectionUtils.isNotEmpty(goodsList)){
+            if (CollectionUtils.isNotEmpty(goodsList)) {
                 // 将 List 转成 JSON串
                 String jsonString = JSONArray.toJSONString(goodsList);
                 // 存入缓存中
-                redisTemplate.opsForValue().set("goods",jsonString);
+                redisTemplate.opsForValue().set("goods", jsonString);
             }
 
         }

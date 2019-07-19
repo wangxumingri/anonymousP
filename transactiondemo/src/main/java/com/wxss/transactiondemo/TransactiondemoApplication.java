@@ -8,7 +8,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 @SpringBootApplication
 public class TransactiondemoApplication {
     @Bean
-    public Object testBean(PlatformTransactionManager platformTransactionManager){
+    public Object testBean(PlatformTransactionManager platformTransactionManager) {
         System.out.println(">>>>>>>>>>" + platformTransactionManager.getClass().getName());
         return new Object();
     }

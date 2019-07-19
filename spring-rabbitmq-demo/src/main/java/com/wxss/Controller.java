@@ -17,9 +17,9 @@ public class Controller {
 //    @Autowired
 //    private RabbitTemplate rabbitTemplate;
 
-//    @RequestMapping(value = "/test1" ,method = RequestMethod.POST)
-    @RequestMapping(value = "/test1" ,produces = "application/json;charset=UTF-8")
-    public String test1(){
+    //    @RequestMapping(value = "/test1" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/test1", produces = "application/json;charset=UTF-8")
+    public String test1() {
 //        String message = "少时诵诗书";
 //        rabbitTemplate.convertAndSend("que_cat_key",message);
 
@@ -27,10 +27,9 @@ public class Controller {
     }
 
 
-
-//    @RequestMapping(value = "/test2",produces = "application/json;charset=UTF-8")
+    //    @RequestMapping(value = "/test2",produces = "application/json;charset=UTF-8")
     @RequestMapping(value = "/test2")
-    public String test2(){
+    public String test2() {
         User user = new User();
         user.setAge(212);
         user.setName("手打");
@@ -39,7 +38,6 @@ public class Controller {
 
         return "发送成功";
     }
-
 
 
 }

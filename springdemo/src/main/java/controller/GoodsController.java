@@ -28,7 +28,7 @@ public class GoodsController {
 
 
     @RequestMapping("/testLogger")
-    public String testLogger(){
+    public String testLogger() {
         logger.trace("trace");
         logger.debug("debug");
         logger.info("info");
@@ -39,38 +39,38 @@ public class GoodsController {
     }
 
 
-    @GetMapping(value = "/findAll",produces = "application/json;charset=utf8")
-    public Result findAll(){
+    @GetMapping(value = "/findAll", produces = "application/json;charset=utf8")
+    public Result findAll() {
         List<Goods> goodsList = goodsService.findAll();
         logger.info("info");
 
-        if (goodsList!=null && goodsList.size()>0){
+        if (goodsList != null && goodsList.size() > 0) {
             System.out.println(goodsList.get(1));
             System.out.println(goodsList.size());
-            return new Result<List<Goods>>(true, ResultConfig.SUCCESS_MESSAGE,goodsList);
+            return new Result<List<Goods>>(true, ResultConfig.SUCCESS_MESSAGE, goodsList);
         }
         logger.debug("debug");
         logger.trace("trace");
         logger.error("error");
-        return new Result(false,ResultConfig.FAILED_MESSAGE);
+        return new Result(false, ResultConfig.FAILED_MESSAGE);
     }
 
-    @GetMapping(value = "/findAllByPage",produces = "application/json;charset=utf8")
-    public Result findAllByPage(@RequestParam(name="p",defaultValue = "4") int page, @RequestParam(defaultValue = "1",required = false) int size){
-        List<Goods> goodsList = goodsService.findAllByPage(page,size);
+    @GetMapping(value = "/findAllByPage", produces = "application/json;charset=utf8")
+    public Result findAllByPage(@RequestParam(name = "p", defaultValue = "4") int page, @RequestParam(defaultValue = "1", required = false) int size) {
+        List<Goods> goodsList = goodsService.findAllByPage(page, size);
 
 
-        if (goodsList!=null && goodsList.size()>0){
+        if (goodsList != null && goodsList.size() > 0) {
             System.out.println(goodsList.size());
-            return new Result<List<Goods>>(true, ResultConfig.SUCCESS_MESSAGE,goodsList);
+            return new Result<List<Goods>>(true, ResultConfig.SUCCESS_MESSAGE, goodsList);
         }
 
-        return new Result(false,ResultConfig.FAILED_MESSAGE);
+        return new Result(false, ResultConfig.FAILED_MESSAGE);
     }
 
 
     @RequestMapping("/save")
-    public void saveGoods(){
+    public void saveGoods() {
         Goods goods = new Goods();
         goods.setGoodsName("未来笔记本电脑");
         goods.setTitle("游戏发烧级");
@@ -82,9 +82,9 @@ public class GoodsController {
     }
 
     @RequestMapping("/saveMap")
-    public void saveGoodsMap(){
+    public void saveGoodsMap() {
 
-        Goods goods = new Goods("aa11414aa","sdaa",BigDecimal.valueOf(9995.9),"ss");
+        Goods goods = new Goods("aa11414aa", "sdaa", BigDecimal.valueOf(9995.9), "ss");
 //        Goods goods = new Goods();
 //        goods.setGoodsName("kkkk");
 //        goods.setTitle("工作利器");
@@ -92,7 +92,7 @@ public class GoodsController {
 //        goods.setGoodsdesc("私人电脑");
 
         Map map = new HashMap();
-        map.put("cs",goods);
+        map.put("cs", goods);
 
         goodsService.save(map);
 

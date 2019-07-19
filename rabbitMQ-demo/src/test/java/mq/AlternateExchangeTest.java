@@ -42,11 +42,11 @@ public class AlternateExchangeTest {
         Map<String, Object> argsMap = new HashMap<>();
 
         // 关键：设置交换器属性
-        argsMap.put("alternate-exchange",EXCHANGE_ALTERNATE);
+        argsMap.put("alternate-exchange", EXCHANGE_ALTERNATE);
         // 声明普通交换器:为其指定备用交换器
-        channel.exchangeDeclare(EXCHANGE_ONE, BuiltinExchangeType.DIRECT, false,false,argsMap);
+        channel.exchangeDeclare(EXCHANGE_ONE, BuiltinExchangeType.DIRECT, false, false, argsMap);
         // 声明共用备用交换器
-        channel.exchangeDeclare(EXCHANGE_ALTERNATE, BuiltinExchangeType.FANOUT,true);
+        channel.exchangeDeclare(EXCHANGE_ALTERNATE, BuiltinExchangeType.FANOUT, true);
 
         // 声明普通队列
         /**
@@ -55,14 +55,14 @@ public class AlternateExchangeTest {
          * autoDelete：是否自动删除
          * arguments:队列的其他属性
          */
-        channel.queueDeclare(QUEUE_TEST1,false,false,false,null);
+        channel.queueDeclare(QUEUE_TEST1, false, false, false, null);
         // 绑定
         channel.queueBind(QUEUE_TEST1, EXCHANGE_ONE, "R1");
         // 声明备用队列
         channel.queueDeclare(QUEUE_ALTERNATE, true, false, false, null);
         channel.queueBind(QUEUE_ALTERNATE, EXCHANGE_ALTERNATE, "");
         // 发送一体不可被路由的消息
-        channel.basicPublish(EXCHANGE_ONE, "R2",null,"消息不可被路由".getBytes(StandardCharsets.UTF_8) );
+        channel.basicPublish(EXCHANGE_ONE, "R2", null, "消息不可被路由".getBytes(StandardCharsets.UTF_8));
 
         AMQP.BasicProperties.Builder s = new AMQP.BasicProperties().builder().expiration("s");
 

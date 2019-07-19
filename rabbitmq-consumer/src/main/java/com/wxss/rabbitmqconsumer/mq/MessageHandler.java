@@ -19,6 +19,7 @@ public class MessageHandler {
 
     /**
      * 自定义+手转：com.alibaba.fastjson.JSONException: syntax error,
+     *
      * @param mes
      * @param message
      * @param channel
@@ -50,17 +51,17 @@ public class MessageHandler {
 
     /**
      * 自定义+不转,直接发map：com.alibaba.fastjson.JSONException: syntax error,
+     *
      * @param mes
      * @param message
      */
     @RabbitListener(queues = RabbitmqConfig.QUEUE_SMS)
-    public void SMSistener(Map map,Message message) throws UnsupportedEncodingException { //
+    public void SMSistener(Map map, Message message) throws UnsupportedEncodingException { //
         System.out.println(map.toString());
         System.out.println(map.get("name"));
         System.out.println("SMS消费");
         System.out.println(message.toString());
     }
-
 
 
 }

@@ -1,9 +1,9 @@
 package test;
 
-public class Z extends F{
+public class Z extends F {
     private int k = printInit("子类的K");
 
-    Z(){
+    Z() {
         System.out.println("子类构造");
     }
 

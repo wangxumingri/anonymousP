@@ -19,7 +19,18 @@ import java.util.List;
 
 /**
  * by 明明如月 github :https://github.com/chujianyun
- * 表格边框不显示
+ * 只在table上加边框不显示:
+ *          <table border="1px"></table>
+ * 只在td上加标签：有边框，但最外面的边框比内部的细：
+ *
+ *          td{
+ *             border: 1px solid black;
+ *          }
+ * 一起用：只有table使用style和 才能让内外边框一致
+ *              td{
+ *  *             border: 1px solid black;
+ *  *          }
+ *               <table width="80%" cellspacing="0"  align="center" style="border: 1px solid red">
  */
 
 public class Html2PdfUtils {

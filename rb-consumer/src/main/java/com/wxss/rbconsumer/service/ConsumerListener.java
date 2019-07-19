@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ConsumerListener {
-    @RabbitListener(queues = "test_simple_queue",containerFactory = "autoAckContainerFactory")
-    public void onSimpleQueue(Spittle spittle){
+    @RabbitListener(queues = "test_simple_queue", containerFactory = "autoAckContainerFactory")
+    public void onSimpleQueue(Spittle spittle) {
         System.out.println(spittle);
     }
 }

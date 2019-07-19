@@ -23,7 +23,7 @@ public class DeadQueueTests {
     Channel channel = null;
 
     @Before
-    public void before(){
+    public void before() {
         System.out.println("*************初始化**************");
         connectionFactory = new ConnectionFactory();
         connectionFactory.setHost("127.0.0.1");
@@ -35,21 +35,22 @@ public class DeadQueueTests {
         try {
             conn = connectionFactory.newConnection();
             channel = conn.createChannel();
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @After
-    public void after(){
+    public void after() {
         System.out.println("*************释放资源**************");
-        if (channel != null){
+        if (channel != null) {
             try {
                 channel.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        if (conn != null){
+        if (conn != null) {
             try {
                 conn.close();
             } catch (IOException e) {
@@ -66,13 +67,13 @@ public class DeadQueueTests {
         channel.exchangeDeclare("普通交换器", BuiltinExchangeType.DIRECT, true);
         channel.exchangeDeclare("死信交换器", BuiltinExchangeType.DIRECT, true);
 
-        Map<String,Object> args = new HashMap<>();
-        args.put("x-message-ttl",10000);// 10秒过期
-        args.put("x-dead-letter-exchange","死信交换器");// 指定死信交换器的名称
-        args.put("x-dead-letter-routing-key","dk");// 死信交换器的路由
+        Map<String, Object> args = new HashMap<>();
+        args.put("x-message-ttl", 10000);// 10秒过期
+        args.put("x-dead-letter-exchange", "死信交换器");// 指定死信交换器的名称
+        args.put("x-dead-letter-routing-key", "dk");// 死信交换器的路由
 
-        channel.queueDeclare("普通队列", true, false,false, args);
-        channel.queueDeclare("死信队列", true, false,false, null);
+        channel.queueDeclare("普通队列", true, false, false, args);
+        channel.queueDeclare("死信队列", true, false, false, null);
 
         channel.queueBind("普通队列", "普通交换器", "pk");
         channel.queueBind("死信队列", "死信交换器", "dk");

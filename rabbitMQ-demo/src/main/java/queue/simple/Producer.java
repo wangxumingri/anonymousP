@@ -14,6 +14,7 @@ import java.util.concurrent.TimeoutException;
  */
 public class Producer {
     private static final String QUEUE_NAME = "simple-queue";
+
     public static void main(String[] args) throws IOException, TimeoutException {
         // 获取连接
         Connection connection = RabbitMQUtils.getConnection();
@@ -24,8 +25,8 @@ public class Producer {
         // 消息体
         String message = "this is a message send to simple-queue without exchange";
         // 发送消息
-        channel.basicPublish("",QUEUE_NAME,null,message.getBytes("UTF-8"));
+        channel.basicPublish("", QUEUE_NAME, null, message.getBytes("UTF-8"));
         // 打印提示
-        System.out.println("发送消息："+message);
+        System.out.println("发送消息：" + message);
     }
 }

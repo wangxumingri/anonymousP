@@ -17,7 +17,7 @@ public class GoodsController {
     private Service service;
 
     @GetMapping("/findAll")
-    public List<Goods> findAll(){
+    public List<Goods> findAll() {
         return service.findAll();
     }
 }

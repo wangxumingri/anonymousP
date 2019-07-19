@@ -47,10 +47,11 @@ public class MybatisConfig {
 
     /**
      * 设置数据源
+     *
      * @return
      */
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setDriverClassName(driverClassName);
         druidDataSource.setUrl(url);
@@ -62,6 +63,7 @@ public class MybatisConfig {
 
     /**
      * 创建SqlSessionFactory
+     *
      * @param dataSource
      * @return
      * @throws Exception
@@ -80,6 +82,7 @@ public class MybatisConfig {
 
     /**
      * 事务支持
+     *
      * @param dataSource
      * @return
      */

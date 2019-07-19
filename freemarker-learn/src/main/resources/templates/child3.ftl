@@ -4,78 +4,145 @@
     <meta charset="UTF-8"/>
     <title>Title</title>
     <style type="text/css">
-        div {
+        .div1 {
+            border: 1px solid red;
             margin: 0 auto;
             width: 80%;
             height: 80%;
+        }
+        @page{
+            size:a4
+        }
+
+        .div2 {
+            border: 1px solid red;
+            margin: 0 auto;
+            width: 80%;
+        }
+        .title {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: left;
+        }
+        .first{
+            font-size: 12px;
+            text-align: left;
+            text-indent: 2em;
+        }
+        .second{
+            font-size: 12px;
+            text-align: left;
+            text-indent: 4em;
         }
         td {
             vertical-align: middle;
             text-align: center;
             font-size: 12px;
             border: 1px solid black;
+            border-collapse: ;
         }
+
     </style>
 </head>
 <body>
-    <div>
-        <div style="vertical-align: middle;text-align:center;font-size:22px ">
-            国家免疫规划疫苗儿童免疫程序表
-        </div>
-        <br/>
-        <table width="70%" cellpadding="0"  cellspacing="0"  align="center" style="border: 1px solid black">
-            <tr>
-                <td colspan="2">
-                    疫苗种类
-                </td>
-                <td colspan="15">
-                    接种年(月)龄
-                </td>
-            </tr>
-            <tr>
-                <td>名称</td>
-                <td>缩写</td>
-                <td>出生时</td>
-                <td>1月</td>
-                <td>2月</td>
-                <td>3月</td>
-                <td>4月</td>
-                <td>5月</td>
-                <td>6月</td>
-                <td>8月</td>
-                <td>9月</td>
-                <td>18月</td>
-                <td>2岁</td>
-                <td>3岁</td>
-                <td>4岁</td>
-                <td>5岁</td>
-                <td>6岁</td>
-            </tr>
-            <#list myList as item>
-                <tr>
-                    <td>${item.vaccineName}</td>
-                    <td>${item.abbreviation}</td>
+        <div class="div1">
+            <div style="vertical-align: middle;text-align:center;font-size:22px ">
+                国家免疫规划疫苗儿童免疫程序表
+            </div>
 
-                    <#list item.vaccinationTime as subItem>
-                            <td>
-                               ${subItem ! ""}
-                            </td>
-                    </#list>
+            <br/>
+
+            <#--<table width="80%"  cellspacing="0"  align="center" style="border: 1px solid black">-->
+            <table width="80%"  cellspacing="0"  align="center">
+                <tr>
+                    <td colspan="2">
+                        疫苗种类
+                    </td>
+                    <td colspan="15">
+                        接种年(月)龄
+                    </td>
                 </tr>
-            </#list>
-        </table>
-    </div>
-    <div style="vertical-align: middle;text-align:center;font-size:22px ">
-        hello □ □ world
-        <label>
-            <input type="checkbox" checked> 1
-        </label>
-        <label>
-            <input type="checkbox">2
-        </label>
-        <label>
-            <input type="checkbox">3
-        </label>
-    </div>
+                <tr>
+                    <td>名称</td>
+                    <td>缩写</td>
+                    <td>出生时</td>
+                    <td>1月</td>
+                    <td>2月</td>
+                    <td>3月</td>
+                    <td>4月</td>
+                    <td>5月</td>
+                    <td>6月</td>
+                    <td>8月</td>
+                    <td>9月</td>
+                    <td>18月</td>
+                    <td>2岁</td>
+                    <td>3岁</td>
+                    <td>4岁</td>
+                    <td>5岁</td>
+                    <td>6岁</td>
+                </tr>
+                <#list myList as item>
+                    <tr>
+                        <td>${item.vaccineName}</td>
+                        <td>${item.abbreviation}</td>
+
+                        <#list item.vaccinationTime as subItem>
+                            <td>
+                                ${subItem ! ""}
+                            </td>
+                        </#list>
+                    </tr>
+                </#list>
+            </table>
+
+
+            <div class="div2" style="vertical-align: middle;text-align:center;font-size:22px ">
+                <p class="title">
+                    注：
+                </p>
+                <p class="first">
+                    1.起始免疫年（月）龄：免疫程序表所列各疫苗剂次的接种时间，是指可以接种该剂次疫苗的最小接种年（月）龄。
+                </p>
+                <p class="first">
+                    2.儿童年（月）龄达到相应疫苗的起始接种年（月）龄时，应尽早接种。建议在下述推荐的年龄之前完成国家免疫规划疫苗相应剂次的接种：
+                <p class="second">
+                    （1）乙肝疫苗第1剂：出生后24小时内完成。
+                </p>
+                <p class="second">
+                    （2）卡介苗：＜3月龄完成。
+                </p>
+                <p class="second">
+                    （3）乙肝疫苗第3剂、脊灰疫苗第3剂、百白破疫苗第3剂、麻风疫苗、乙脑减毒活疫苗第1剂或乙脑灭活疫苗第2剂：＜12月龄完成。
+                </p>
+                <p class="second">
+                    （4）A群流脑多糖疫苗第2剂：＜18月龄完成。
+                </p>
+                <p class="second">
+                    （5）麻腮风疫苗、甲肝减毒活疫苗或甲肝灭活疫苗第1剂、百白破疫苗第4剂：＜24月龄完成。
+                </p>
+                <p class="second">
+                    （6）乙脑减毒活疫苗第2剂或乙脑灭活疫苗第3剂、甲肝灭活疫苗第2剂：＜3周岁完成。
+                </p>
+                <p class="second">
+                    （7）A群C群流脑多糖疫苗第1剂：＜4周岁完成。
+                </p>
+                <p class="second">
+                    （8）脊灰疫苗第4剂：＜5周岁完成。
+                </p>
+                <p class="second">
+                    （9）白破疫苗、A群C群流脑多糖疫苗第2剂、乙脑灭活疫苗第4剂：＜7周岁完成
+                </p>
+                </p>
+                <p class="first">
+                    3．选择乙脑减毒活疫苗接种时，采用两剂次接种程序。选择乙脑灭活疫苗接种时，采用四剂次接种程序；乙脑灭活疫苗第1、2剂间隔7～10天;
+                </p>
+                <p class="first">
+                    4．选择甲肝减毒活疫苗接种时，采用一剂次接种程序。选择甲肝灭活疫苗接种时，采用两剂次接种程序。
+                </p>
+
+            </div>
+        </div>
+
+
 </body>
 </html>

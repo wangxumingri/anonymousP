@@ -29,14 +29,14 @@ public class Producer {
      * 发给EMAIL队列
      */
     @Test
-    public void sendMap(){
-        Map<String,Object> map = new HashMap<String, Object>();
-        map.put("id",2);
-        map.put("name","hello");
+    public void sendMap() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", 2);
+        map.put("name", "hello");
 //        String jsonString = JSONObject.toJSONString(map);
         // 将消息发送给EMAIL队列
 //        rabbitTemplate.convertAndSend(RabbitmqConfig.EXCHANGE_DIRECT,RabbitmqConfig.ROUTING_EMAIL,jsonString);
-        rabbitTemplate.convertAndSend(RabbitmqConfig.EXCHANGE_DIRECT,RabbitmqConfig.ROUTING_EMAIL,map);
+        rabbitTemplate.convertAndSend(RabbitmqConfig.EXCHANGE_DIRECT, RabbitmqConfig.ROUTING_EMAIL, map);
 //        System.out.println("send:"+jsonString);
     }
 
@@ -44,13 +44,13 @@ public class Producer {
      * 发给SMS队列
      */
     @Test
-    public void sendMapByCustomeTemplate(){
-        Map<String,Object> map = new HashMap<String, Object>();
-        map.put("id",2);
-        map.put("name","hello world");
+    public void sendMapByCustomeTemplate() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", 2);
+        map.put("name", "hello world");
 //        String jsonString = JSONObject.toJSONString(map);
         // 将消息发送给EMAIL队列
-        rabbitTemplate.convertAndSend(RabbitmqConfig.EXCHANGE_DIRECT,RabbitmqConfig.ROUTING_SMS,map);
+        rabbitTemplate.convertAndSend(RabbitmqConfig.EXCHANGE_DIRECT, RabbitmqConfig.ROUTING_SMS, map);
 //        System.out.println("send:"+jsonString);
     }
 
@@ -59,7 +59,7 @@ public class Producer {
      * 事务测试
      */
     @Test
-    public void testTransaction(){
+    public void testTransaction() {
 
     }
 }

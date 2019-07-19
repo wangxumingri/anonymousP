@@ -1,8 +1,8 @@
 package test;
 
-public class Zi extends Fu{
+public class Zi extends Fu {
 
-    private int a =  1;
+    private int a = 1;
 
     static {
         System.out.println("子类第一个静态块");

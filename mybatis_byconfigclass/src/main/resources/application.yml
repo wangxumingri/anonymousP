@@ -27,7 +27,7 @@ spring:
     timeout: 1000
 # mybatis
 mybatis:
-# 从src/main/resource开始
+  # 从src/main/resource开始
   mapper-locations: classpath:mybatis/mapper/*Mapper.xml
   # 实体类的别名
   type-aliases-package: com.wxss.demo.entity

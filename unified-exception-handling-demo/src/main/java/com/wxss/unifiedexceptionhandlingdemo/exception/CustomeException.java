@@ -11,16 +11,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CustomeException extends RuntimeException{
+public class CustomeException extends RuntimeException {
     private int code;
     private String message;
 
-    public CustomeException(int code,String message){
+    public CustomeException(int code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public CustomeException(ResultType resultType){
+    public CustomeException(ResultType resultType) {
         this.message = resultType.getMsg();
         this.code = resultType.getCode();
     }

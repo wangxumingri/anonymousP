@@ -4,6 +4,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import com.itextpdf.tool.xml.XMLWorkerFontProvider;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
+import com.wxss.itext.PdfUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -214,7 +215,7 @@ public class ItextTests {
     public void exampleFromNet() throws IOException, DocumentException {
         Document document = new Document();
         // 创建PdfWriter对象
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("D:/complexTable22.pdf"));
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("D:/complexTable2w2.pdf"));
         // 打开文档
         document.open();
 
@@ -352,7 +353,7 @@ public class ItextTests {
     }
 
     /**
-     * 生成静态页面的
+     * 返回静态页面的字符串内容
      *
      * @param ftlFileName
      * @param model
@@ -383,6 +384,42 @@ public class ItextTests {
         }
         return "";
     }
+
+
+    /**
+     *  生成静态页面
+     * @param ftlFile 模板路径
+     * @param outFile 输出路径
+     * @param model 数据
+     * @return 生成后静态页面的路径
+     */
+    public String translateFtlToHtml(String ftlFile, String outFile,Object model) {
+        Writer writer = null;
+        try {
+            Configuration configuration = new Configuration(Configuration.getVersion());
+            configuration.setDirectoryForTemplateLoading(new File("F:/ideaWorkPlace/anonymousP/freemarker-learn/src/main/resources/templates"));
+            configuration.setDefaultEncoding("utf-8");
+            // 获取指定模板
+            Template template = configuration.getTemplate(ftlFile);
+            writer = new FileWriter(outFile);
+            // 填充数据
+            template.process(model, writer);
+            return outFile;
+        } catch (IOException | TemplateException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                assert writer != null;
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "";
+    }
+
+
+
 
     /**
      * 返回流，而不是生成文件
@@ -558,16 +595,169 @@ public class ItextTests {
         v1.setVaccinationTime(time3);
         vaccineImmunizationInChildDataList.add(v1);
 
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time4 = new String[15];
+        time4[2] = "1";
+        time4[5] = "2";
+        time4[14] = "16";
+        v1.setVaccinationTime(time4);
+        vaccineImmunizationInChildDataList.add(v1);
+
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time5 = new String[15];
+        time5[2] = "1";
+        time5[5] = "2";
+        time5[14] = "16";
+        v1.setVaccinationTime(time5);
+        vaccineImmunizationInChildDataList.add(v1);
+
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time6 = new String[15];
+        time6[2] = "1";
+        time6[5] = "2";
+        time6[14] = "16";
+        v1.setVaccinationTime(time6);
+        vaccineImmunizationInChildDataList.add(v1);
+
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time7 = new String[15];
+        time7[2] = "1";
+        time7[5] = "2";
+        time7[14] = "16";
+        v1.setVaccinationTime(time7);
+        vaccineImmunizationInChildDataList.add(v1);
+
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time8= new String[15];
+        time8[2] = "1";
+        time8[5] = "2";
+        time8[14] = "16";
+        v1.setVaccinationTime(time8);
+        vaccineImmunizationInChildDataList.add(v1);
+
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time9 = new String[15];
+        time9[2] = "1";
+        time9[5] = "2";
+        time9[14] = "16";
+        v1.setVaccinationTime(time9);
+        vaccineImmunizationInChildDataList.add(v1);
+
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time10 = new String[15];
+        time10[2] = "1";
+        time10[5] = "2";
+        time10[14] = "16";
+        v1.setVaccinationTime(time10);
+        vaccineImmunizationInChildDataList.add(v1);
+
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time11 = new String[15];
+        time11[2] = "1";
+        time11[5] = "2";
+        time11[14] = "16";
+        v1.setVaccinationTime(time11);
+        vaccineImmunizationInChildDataList.add(v1);
+
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time12 = new String[15];
+        time12[2] = "1";
+        time12[5] = "2";
+        time12[14] = "16";
+        v1.setVaccinationTime(time12);
+        vaccineImmunizationInChildDataList.add(v1);
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time13 = new String[15];
+        time13[2] = "1";
+        time13[5] = "2";
+        time13[14] = "16";
+        v1.setVaccinationTime(time13);
+        vaccineImmunizationInChildDataList.add(v1);
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time14 = new String[15];
+        time14[2] = "1";
+        time14[5] = "2";
+        time14[14] = "16";
+        v1.setVaccinationTime(time14);
+        vaccineImmunizationInChildDataList.add(v1);
+
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time15 = new String[15];
+        time15[2] = "1";
+        time15[5] = "2";
+        time15[14] = "16";
+        v1.setVaccinationTime(time15);
+        vaccineImmunizationInChildDataList.add(v1);
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time16 = new String[15];
+        time16[2] = "1";
+        time16[5] = "2";
+        time16[14] = "16";
+        v1.setVaccinationTime(time16);
+        vaccineImmunizationInChildDataList.add(v1);
+
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time17 = new String[15];
+        time17[2] = "1";
+        time17[5] = "2";
+        time17[14] = "16";
+        v1.setVaccinationTime(time17);
+        vaccineImmunizationInChildDataList.add(v1);
+
+        v1 = new VaccineImmunizationInChildData();
+        v1.setVaccineName("脊灰灭活疫苗");
+        v1.setAbbreviation("IPV");
+        String[] time18 = new String[15];
+        time18[2] = "1";
+        time18[5] = "2";
+        time18[14] = "16";
+        v1.setVaccinationTime(time18);
+        vaccineImmunizationInChildDataList.add(v1);
+
+
         rootDateModel.put("myList", vaccineImmunizationInChildDataList);
         // 获取抓换后的ftl字符串
         String ftlStr = translateFtlToHtml("child3.ftl", rootDateModel);
 
         try {
-            // 直接生成PDF文件
-            Html2PdfUtils.createPdf(ftlStr,"D:/直接生成pdf文件11.pdf");
+//         直接生成PDF文件
+            Html2PdfUtils.createPdf(ftlStr,"D:/儿童10.pdf");
+
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
         }
+
+        // 可以用，但样式有问题：居中，table的边框，段落...
+//        String outFile = translateFtlToHtml("child3.ftl", "D:/测试3.html", rootDateModel);
+//        PdfUtils.html2pdf(outFile, "D:/测试3.pdf", "F:\\ideaWorkPlace\\anonymousP\\freemarker-learn\\src\\main\\resources\\simsun.ttc");
     }
 
     /**

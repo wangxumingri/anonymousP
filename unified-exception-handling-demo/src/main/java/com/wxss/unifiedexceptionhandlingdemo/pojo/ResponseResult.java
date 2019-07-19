@@ -22,6 +22,6 @@ public class ResponseResult<T> {
     }
 
     public ResponseResult(int code, String msg) {
-        this(code,msg,null);
+        this(code, msg, null);
     }
 }

@@ -20,12 +20,12 @@
     <!--2.配置视图解析器（可选） -->
     <!--一般用于mvc的返回值是字符串类型，然后可以通过配置视图解析器，找到指定的视图-->
     <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-        <!--&lt;!&ndash; JSP文件所在的目录 &ndash;&gt;-->
-        <!--<property name="prefix" value="/static/" />-->
-        <!--&lt;!&ndash; 文件的后缀名：mvc的String类型返回值+后缀： list(MVC返回值).jsp(后缀) &ndash;&gt;-->
-        <!--<property name="suffix" value=".jsp" />-->
-        <!--&lt;!&ndash;<property name="contentType">&ndash;&gt;-->
-            <!--&lt;!&ndash;<value>text/html;charset=UTF-8</value>&ndash;&gt;-->
-        <!--&lt;!&ndash;</property>&ndash;&gt;-->
+    <!--&lt;!&ndash; JSP文件所在的目录 &ndash;&gt;-->
+    <!--<property name="prefix" value="/static/" />-->
+    <!--&lt;!&ndash; 文件的后缀名：mvc的String类型返回值+后缀： list(MVC返回值).jsp(后缀) &ndash;&gt;-->
+    <!--<property name="suffix" value=".jsp" />-->
+    <!--&lt;!&ndash;<property name="contentType">&ndash;&gt;-->
+    <!--&lt;!&ndash;<value>text/html;charset=UTF-8</value>&ndash;&gt;-->
+    <!--&lt;!&ndash;</property>&ndash;&gt;-->
     <!--</bean>-->
 </beans>

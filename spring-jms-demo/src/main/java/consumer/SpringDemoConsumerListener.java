@@ -1,6 +1,7 @@
 package consumer;
 
 import com.alibaba.fastjson.JSONObject;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;

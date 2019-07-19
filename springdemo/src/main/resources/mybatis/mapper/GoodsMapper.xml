@@ -21,10 +21,11 @@
         INSERT INTO goods (goods_name,title,price,goodsDesc) VALUES (#{goodsName},#{title},#{price},#{goodsdesc})
     </insert>
     <insert id="save" parameterType="Map">
-        INSERT INTO goods (goods_name,title,price,goodsDesc) VALUES (#{cs.goodsName},#{cs.title},#{cs.price},#{cs.goodsdesc})
+        INSERT INTO goods (goods_name,title,price,goodsDesc) VALUES
+        (#{cs.goodsName},#{cs.title},#{cs.price},#{cs.goodsdesc})
     </insert>
 
-    <select id="findOneById" parameterType = "int" resultMap="baseResultMap">
+    <select id="findOneById" parameterType="int" resultMap="baseResultMap">
         SELECT * FROM goods WHERE id = #{id}
     </select>
 </mapper>

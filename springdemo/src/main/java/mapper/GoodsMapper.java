@@ -7,7 +7,9 @@ import java.util.Map;
 
 public interface GoodsMapper {
     List<Goods> findAll();
+
     void saveGoods(Goods goods);
+
     void save(Map map);
 
     Goods findOneById(int id);

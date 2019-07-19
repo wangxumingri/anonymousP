@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
 
-
     @RequestMapping("/test/{id}")
-    public String test(@PathVariable("id") int id){
+    public String test(@PathVariable("id") int id) {
         log.debug("debug");
         log.info("info");
-        log.error("s:{}", "error括号");
-        if (1==id)
+        log.error("s:{} error括号");
+        if (1 == id)
             throw new CustomeException(ResultType.ERROR);
         else {
             return "测试";

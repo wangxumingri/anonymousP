@@ -11,10 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,8 +35,14 @@ public class FreemarkerlearnApplicationTests {
         }
     }
 
+    /**
+     * 返回模板的字符串
+     * @param ftlFileName
+     * @param model
+     * @return
+     */
     public String translateFtlToHtml2(String ftlFileName, Object model) {
-        StringWriter writer = null;
+        Writer writer = null;
         try {
             // 获取指定模板
             Template template = configuration.getTemplate(ftlFileName);
@@ -61,6 +64,11 @@ public class FreemarkerlearnApplicationTests {
         return "";
     }
 
+    /**
+     * 直接生成html
+     * @param ftlFileName
+     * @param model
+     */
     public void translateFtlToHtml(String ftlFileName, Object model) {
         FileWriter writer = null;
         String outPurFileName;
@@ -80,6 +88,7 @@ public class FreemarkerlearnApplicationTests {
             writer = new FileWriter(HTML_OUTPUT_DIRECTORY + outPurFileName);
             // 填充数据
             template.process(model, writer);
+
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
         } finally {

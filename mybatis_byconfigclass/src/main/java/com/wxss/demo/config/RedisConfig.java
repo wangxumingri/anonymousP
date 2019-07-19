@@ -16,14 +16,14 @@ import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Redis配置类：
- *      JedisPoolConfig
- *          -redis.config
- *      JedisConnectionFactory
- *          -JedisPoolConfig
- *          【-哨兵】
- *      RedisTemplate
- *          -JedisConnectionFactory
- *          -序列化
+ * JedisPoolConfig
+ * -redis.config
+ * JedisConnectionFactory
+ * -JedisPoolConfig
+ * 【-哨兵】
+ * RedisTemplate
+ * -JedisConnectionFactory
+ * -序列化
  */
 @Configuration
 @PropertySource("classpath:redis.properties")
@@ -65,10 +65,11 @@ public class RedisConfig {
 
     /**
      * Jedis连接池配置
+     *
      * @return
      */
     @Bean(name = "myJedisPoolConfig")
-    public JedisPoolConfig jedisPoolConfig(){
+    public JedisPoolConfig jedisPoolConfig() {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
 
         // 最大空闲数
@@ -93,11 +94,12 @@ public class RedisConfig {
 
     /**
      * 连接工厂配置
+     *
      * @param jedisPoolConfig
      * @return
      */
-    @Bean(name="myJedisConnectionFactory")
-    public JedisConnectionFactory jedisConnectionFactory(@Qualifier("myJedisPoolConfig") JedisPoolConfig jedisPoolConfig){
+    @Bean(name = "myJedisConnectionFactory")
+    public JedisConnectionFactory jedisConnectionFactory(@Qualifier("myJedisPoolConfig") JedisPoolConfig jedisPoolConfig) {
         // 还可以在此传入哨兵
         JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig);
 
@@ -106,21 +108,23 @@ public class RedisConfig {
 
     /**
      * 模板：具体操作Redis
+     *
      * @param jedisConnectionFactory
      * @return
      */
     @Bean("myRedisTemplate")
-    public RedisTemplate redisTemplate(@Qualifier("myJedisConnectionFactory") JedisConnectionFactory jedisConnectionFactory){
+    public RedisTemplate redisTemplate(@Qualifier("myJedisConnectionFactory") JedisConnectionFactory jedisConnectionFactory) {
         RedisTemplate redisTemplate = new RedisTemplate();
-        initRedisTemplate(redisTemplate,jedisConnectionFactory);
+        initRedisTemplate(redisTemplate, jedisConnectionFactory);
 
         return redisTemplate;
     }
 
     /**
      * 初始化RedisTemplate:
-     *      - 设置序列化
-     *      - 开启事务
+     * - 设置序列化
+     * - 开启事务
+     *
      * @param redisTemplate
      * @param redisConnectionFactory :JedisConnectionFactory是其实现类
      */

@@ -30,7 +30,7 @@ public class LockDemo2 {
         boolean flag = false;
         flag = lock.tryLock();
 
-        System.out.println(Thread.currentThread().getName()+"：【"+flag+"】");
+        System.out.println(Thread.currentThread().getName() + "：【" + flag + "】");
         try {
             if (flag) {
                 // 获取到锁
@@ -52,4 +52,6 @@ public class LockDemo2 {
         }
     }
 }
-/**已经获取锁的线程不会再执行，没获取的会一直执行，直到获取锁*/
+/**
+ * 已经获取锁的线程不会再执行，没获取的会一直执行，直到获取锁
+ */

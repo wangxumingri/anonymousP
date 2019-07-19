@@ -2,25 +2,31 @@ package com.wxss.itext;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import com.itextpdf.text.pdf.draw.LineSeparator;
+import com.lowagie.text.pdf.PdfCell;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import javax.print.Doc;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
 
 /**
  * Author:Created by wx on 2019/6/25
- * Desc:
+ * Desc:使用itext 原生API 生成 PDF文档
+ *      目前存在问题：
+ *          1.存在重复代码，需要进一步封装
+ *          2.PDF中的复选框暂未找到合适的解决方案
  */
 public class PDFChildImmunizationHelper {
     private static final float[] WIDTH1_OF_NEST_TABLE_ = {150f, 50f};
     private static final float[] WIDTH2_OF_NEST_TABLE_ = {200f, 50f};
     private static final float[] WIDTH3_OF_NEST_TABLE_ = {100f, 50f,100f,50f};
+    private static final float[] WIDTH4_OF_NEST_TABLE_ = {50f, 50f};
 
     private BaseFont bf = null;
     //标题字体 蓝色
@@ -84,44 +90,17 @@ public class PDFChildImmunizationHelper {
         // 标题
         Paragraph tableTitle = new Paragraph("国家免疫规划疫苗儿童免疫程序表"+"\n"+"\n",title);
         tableTitle.setAlignment(Element.ALIGN_CENTER); // 居中
-
         doc.add(tableTitle);
         // 姓名和编号
-        /**
-         * 要考虑：标签与值分离的情况，即一个加粗一个不加粗;以及文本的位置
-         *  可放在table里，通过table设置位置
-         *  样式相同：Phrase#add(String)
-         *  样式不同：Phrase#add(Element)
-         *   Phrase#add(int,Element) // 一个元素占一个索引位
-         * phrase：超出一行会自动换行
-         * Paragraph一个一行
-         * 制表符无效
-         * 设置字符间距：
-         *      Chunk#setCharacterSpacing(20F);
-         *  设置上下移位
-         *              Chunk#setTextRise()
-         *
-         *    chunk.setWordSpacing(3F);有什么用
-         *
-         *      Chunk设置文本位置，需要放在ColummnText中，Phrase有个setColumn方法
-         *
-         *      PdfPcell# add(Element) 会替换掉已有的元素，而不是增加
-         */
 
-
-
-//        Chunk name = new Chunk("姓名：",chs3);
         try {
             PdfPTable table = new PdfPTable(6);
-            // 不生效
-//            firstTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-
             Phrase phrase = new Phrase("姓名：",chs3);
             phrase.add("测试人员A");
             PdfPCell cell = new PdfPCell(phrase);
 
             cell.setColspan(3);
-            cell.setBorder(Rectangle.BOX);
+            cell.setBorder(Rectangle.NO_BORDER);
             cell.setFixedHeight(20f);
             cell.setHorizontalAlignment(Element.ALIGN_LEFT); // 2
             cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE); // 5
@@ -132,7 +111,7 @@ public class PDFChildImmunizationHelper {
             phrase.add("123456789");
             cell = new PdfPCell(phrase);
             cell.setColspan(3);
-            cell.setBorder(Rectangle.BOX);
+            cell.setBorder(Rectangle.NO_BORDER);
             cell.setFixedHeight(20f);
             cell.setHorizontalAlignment(Element.ALIGN_RIGHT);  // 0
             cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE); // 5
@@ -143,7 +122,7 @@ public class PDFChildImmunizationHelper {
             cell.setFixedHeight(5f);
             cell.setColspan(6);
             /**暂时设为有边框*/
-            cell.setBorder(Rectangle.BOX); // 15
+            cell.setBorder(Rectangle.BOTTOM); // 15
             table.addCell(cell);
 
             // word中表格:
@@ -547,7 +526,7 @@ public class PDFChildImmunizationHelper {
             /**第十三行*/
             // 标签
             phrase = new Phrase("听诊",chs4);
-            createTableLabel(table, 1, phrase);
+            createSimpleCell(table, 1,1,  phrase);
             // 心脏跨两列
             List<Phrase> phraseList = new ArrayList<>();
             phraseList.add(new Phrase("心脏：1未见异常 2异常",chs4));
@@ -560,7 +539,7 @@ public class PDFChildImmunizationHelper {
             createNestTable(table, 3,WIDTH2_OF_NEST_TABLE_, phraseList);
             // 第十四行:
             // 标签
-            createTableLabel(table,3,new Phrase("妇科检查",chs4));
+            createSimpleCell(table,3,1, new Phrase("妇科检查",chs4));
             // 外阴：
             phraseList = new ArrayList<>();
             phraseList.add(new Phrase("外阴：1未见异常 2异常",chs4));
@@ -583,28 +562,104 @@ public class PDFChildImmunizationHelper {
             createNestTable(table, 3, WIDTH1_OF_NEST_TABLE_,phraseList );
             // 附件
             phraseList = new ArrayList<>();
-            phraseList.add(new Phrase("阴道：1未见异常 2异常",chs4));
+            phraseList.add(new Phrase("附件：1未见异常 2异常",chs4));
             phraseList.add(new Phrase("□",chs4));
             createNestTable(table, 5, WIDTH1_OF_NEST_TABLE_,phraseList );
             // 第十五行
             // 标签：
-            createTableLabel(table, 1, new Phrase("辅助检查",chs4));
-            // 血常规标签：
-            createTableLabel(table, 1, new Phrase("血常规",chs4));
-            // 血常规值：
+            createSimpleCell(table, 6,1,  new Phrase("辅助检查",chs4));
+            // 血常规标签
+            /**这里因为生成值的时候，直接把两行当做一张子表生成，所以rolspan为1，而不是2
+             *
+             * 为2时，血常规单元格占两行，它右边的默认是两行单元格，生成嵌套表格时，使用的是右上的单元格，
+             * */
+
+            createSimpleCell(table, 2,1,  new Phrase("血常规",chs4));
+            // 血红蛋白值和白细胞计数值：
             phraseList = new ArrayList<>();
             phraseList.add(new Phrase("血红蛋白值",chs4));
             phraseList.add(new Phrase(" 500g/L  ",chs4));
             phraseList.add(new Phrase("白细胞计数值",chs4));
             phraseList.add(new Phrase(" 100/L  ",chs4));
+            createNestTable(table, 4, WIDTH3_OF_NEST_TABLE_,phraseList );
+            phraseList = new ArrayList<>();
+            // 血小板计数值和其他
             phraseList.add(new Phrase("血小板计数值",chs4));
             phraseList.add(new Phrase(" 500/L  ",chs4));
             phraseList.add(new Phrase("其他",chs4));
-            phraseList.add(new Phrase("",chs4));
+            phraseList.add(new Phrase("1",chs4));
+            createNestTable(table, 4, WIDTH3_OF_NEST_TABLE_,phraseList );
+            // 尿常规标签：
+            createSimpleCell(table, 1,1, new Phrase("尿常规",chs4));
+            // 尿常规值：
+            phraseList = new ArrayList<>();
+            phraseList.add(new Phrase("尿蛋白尿糖尿酮体尿潜血",chs4));
+            phraseList.add(new Phrase(" 500g/L  ",chs4));
+            phraseList.add(new Phrase("其他",chs4));
+            phraseList.add(new Phrase(" 100/L  ",chs4));
             createNestTable(table, 4, WIDTH3_OF_NEST_TABLE_,phraseList );
 
+            // 血型标签：
+            /**换方法了：前面的需要修改*/
+            Map<String,Object> tableAttributeMap = new HashMap<>();
+            tableAttributeMap.put("columns", WIDTH4_OF_NEST_TABLE_);
+            List<TableElement> elementList = new ArrayList<>();
+            TableElement tableElement = new TableElement();
+            tableElement.setAlignCenter(true);
+            tableElement.setCheckBox(false);
+            tableElement.setRowspan(2);
+            tableElement.setElement(new Phrase("血型", chs4));
+            elementList.add(tableElement);
+
+            tableElement = new TableElement();
+            tableElement.setAlignCenter(true);
+            tableElement.setCheckBox(false);
+            tableElement.setElement(new Phrase("ABO", chs4));
+            elementList.add(tableElement);
+
+            tableElement = new TableElement();
+            tableElement.setAlignCenter(true);
+            tableElement.setCheckBox(false);
+            tableElement.setElement(new Phrase("Rh", chs4));
+            elementList.add(tableElement);
+
+            tableAttributeMap.put("elements",elementList);
+//
+            createComplexCell(table, 1,2,tableAttributeMap);
+            createSimpleCell(table, 2, 4, new Phrase("我也不知道是什么",chs4));
+            // 血糖：
+            createSimpleCell(table, 1, 1, new Phrase("血糖",chs4));
+            phrase =  new Phrase("mmol/L",chs4);
+            phrase.add(0, new Chunk("100" ));
+            createSimpleCell(table, 1, 4,phrase );
+            // 肝功能：
+            createSimpleCell(table, 3, 1, new Phrase("肝功能",chs4));
+
+            cell = null;
+            phrase = null;
+            phraseList = null;
             /**关闭document*/
             doc.add(table);
+            // 设置备注文本
+            Paragraph remarksParagraph = new Paragraph();
+            remarksParagraph.add(new Phrase("填表说明:",chs3));
+            remarksParagraph.setAlignment(Element.ALIGN_LEFT);
+            remarksParagraph.setIndentationLeft(60f);
+            doc.add(remarksParagraph);
+
+            remarksParagraph = new Paragraph();
+            remarksParagraph.add(new Phrase("1．本表由医生在第一次接诊孕妇（尽量在孕13周前）时填写。若未建立居民健康档案，需同时建立。随访时填写各项目对应情况的数字。",chs4));
+            remarksParagraph.setAlignment(Element.ALIGN_LEFT);
+            remarksParagraph.setIndentationLeft(70); // 左缩进
+            remarksParagraph.setIndentationRight(70); // 右缩进
+            remarksParagraph.setFirstLineIndent(12f); // 设置第一行缩进
+            //段落2与段落2的间距加大50个单位
+//            remarksParagraph.SpacingAfter = 50;
+//            //段落2与段落1的间距加大100个单位
+//            remarksParagraph.SpacingBefore = 100;
+            doc.add(remarksParagraph);
+            remarksParagraph = null;
+
             // 关闭
             doc.close();
         } catch (DocumentException e) {
@@ -612,33 +667,106 @@ public class PDFChildImmunizationHelper {
         }
     }
 
+
     /**
-     * 用于生成表格基本的标签
-     * 待完善：跨列，及复杂跨行跨列的宽度和长度问题
-     *      增加一个标志来判断 是大元素还是小元素
+     * 通过嵌套表的方式，生成复杂的表格标签
+     *  问题：
+     *      1.参数过多
+     *      2.尚未自定义子表的列宽度
+     *      3.跨行跨列有问题： 应该和值在一起封装为一个对象
+     *  1   2
+     */
+    @SuppressWarnings("unchecked")
+    public void createComplexCell(PdfPTable fatherTable, int fatherColspan, int fatherRowspan, Map<String,Object> tableAttributeMap) throws DocumentException {
+        float[] columns = (float[]) tableAttributeMap.get("columns");
+        // 子表
+        PdfPTable sonTable = new PdfPTable(columns.length);
+        sonTable.setWidths(columns);
+        // 子表中的单元格
+        PdfPCell sonCell = null;
+        List<TableElement> elements = (List<TableElement>) tableAttributeMap.get("elements");
+        for (int i = 0; i < elements.size(); i++) {
+            TableElement tableElement = elements.get(i);
+            // 该属性目前用不到
+//            int colspan = tableElement.getColspan();
+            int rowspan = tableElement.getRowspan();
+            boolean isCheckBox = tableElement.isCheckBox(); // 判断是否是普通标签还是复选框
+            // 判断对齐方式：普通标签：水平垂直居中，复选框：靠右居中：值标签：靠左，值：居中
+            boolean isAlignCenter = tableElement.isAlignCenter();
+            Element element = tableElement.getElement();
+            if (element instanceof Phrase){
+                Phrase phrase = (Phrase)element;
+                sonCell = new PdfPCell(phrase);
+            }else if (element instanceof PdfPCell){
+                PdfPCell cell = (PdfPCell) element;
+                sonCell = new PdfPCell(cell);
+            }else if (element instanceof PdfPTable){
+                PdfPTable table = (PdfPTable) element;
+                sonCell = new PdfPCell(table);
+            }else {
+                return;
+            }
+            if (rowspan>1){
+                sonCell.setRowspan(rowspan);
+                sonCell.setFixedHeight(20f*rowspan);
+            }else {
+                sonCell.setFixedHeight(20f);
+            }
+            if (isCheckBox){
+                // 是复选框:靠右
+                sonCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                sonCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            }else {
+                // 不是复选框，进一步判断居中
+                if (isAlignCenter){
+                    // 居中
+                    sonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    sonCell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
+                }else {
+                    // 不居中,靠左
+                    sonCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    sonCell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
+                }
+            }
+            // 填充元素
+            sonTable.addCell(sonCell);
+        }
+        // 根据子表创建父单元格
+        PdfPCell fatherCell = new PdfPCell(sonTable);
+        fatherCell.setColspan(fatherColspan);
+        fatherCell.setRowspan(fatherRowspan);
+        fatherTable.addCell(fatherCell);
+
+    }
+
+    /**
+     * 用于生成简单的水平垂直居中的表格标签：
      * @param table 表格
      * @param rowspan 跨行
+     * @param colspan 跨列
      */
-    private void createTableLabel(PdfPTable table,int rowspan,Phrase phrase) {
+    private void createSimpleCell(PdfPTable table,int rowspan,int colspan,Phrase phrase) {
         PdfPCell cell = new PdfPCell(phrase);
+        // add的对齐不会生效
+//        cell.addElement(phrase);
         if (rowspan>1){
             cell.setRowspan(rowspan);
             cell.setFixedHeight(20f*rowspan);
         }else {
             cell.setFixedHeight(20f);
-
         }
-//        cell.setBorder(Rectangle.BOX);
+
+        if (colspan>1){
+            cell.setColspan(colspan);
+        }
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);  // 1
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE); // 5
         table.addCell(cell);
     }
 
     /**
-     * 生成简单的嵌套表格
-     * 待优化：
-     *          区分普通文本和复选框
-     *          根据奇偶设置单元格文本的对齐方式：奇数：右对齐，偶数（是复选框就右对齐，否则居中对齐）
+     * 生成简单的嵌套表格：
+     *          适用于嵌套表格不需要额外的跨行跨列
      * @param sonTableWidth 子表列宽数组
      * @param phraseList 子表单元格值
      * @throws DocumentException
@@ -655,7 +783,7 @@ public class PDFChildImmunizationHelper {
                 smallCell = new PdfPCell(phraseList.get(i));
                 smallCell.setHorizontalAlignment(Element.ALIGN_RIGHT);  // 1
                 smallCell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE); // 5
-
+                smallCell.setFixedHeight(20f);
                 smallCell.setBorder(Rectangle.BOX);
                 smallCell.disableBorderSide(Rectangle.LEFT);
                 nestTable.addCell(smallCell);
@@ -684,6 +812,126 @@ public class PDFChildImmunizationHelper {
     }
 
 
+    @Test
+    public void test11() throws Exception{
+        Document document = new Document();
+        File file = new File("C:\\Users\\Administrator\\Desktop\\临时文件夹\\22.pdf");
+
+        PdfWriter.getInstance(document, new FileOutputStream(file));
+        document.open();
+
+        PdfPTable table = new PdfPTable(3);
+
+        PdfPCell cell = new PdfPCell();
+        cell.addElement(new Phrase("11", chs4));
+        cell.setRowspan(2);
+        table.addCell(cell);
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("11", chs4));
+        table.addCell(cell);
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("11", chs4));
+        table.addCell(cell);
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("12", chs4));
+        table.addCell(cell);
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("12", chs4));
+        table.addCell(cell);
+
+        // 第二行：
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("2", chs4));
+        cell.setRowspan(3);
+        table.addCell(cell);
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("21", chs4));
+        table.addCell(cell);
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("21", chs4));
+        table.addCell(cell);
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("22", chs4));
+        table.addCell(cell);
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("22", chs4));
+        table.addCell(cell);
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("23", chs4));
+        table.addCell(cell);
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("23", chs4));
+        table.addCell(cell);
+
+        // 第三行：
+        /**有跨行的话：如果第一个跨5行，第一个儿子，跨2行，后面也只有第一个儿子的元素，那么总体还是跨2行。而不是5行*/
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("3", chs4));
+        cell.setRowspan(5);
+        table.addCell(cell);
+
+        cell = new PdfPCell();
+        cell.setRowspan(2);
+        cell.addElement(new Phrase("31", chs4));
+        table.addCell(cell);
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("311", chs4));
+        table.addCell(cell);
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("312", chs4));
+        table.addCell(cell);
+
+        // 应该是第二行
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("32", chs4));
+        table.addCell(cell);
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("321", chs4));
+        table.addCell(cell);
+
+        // 第三个儿子
+        PdfPTable t = new PdfPTable(2);
+        PdfPCell c = new PdfPCell();
+        c.setRowspan(2);
+        c.addElement(new Phrase("1", chs4));
+        c.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE); // 5
+        c.setHorizontalAlignment(Element.ALIGN_CENTER); // 1
+        t.addCell(c);
+        c = new PdfPCell(new Phrase("2",chs4));
+        c.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE); // 5
+        c.setHorizontalAlignment(Element.ALIGN_CENTER); // 1
+        t.addCell(c);
+
+        c = new PdfPCell();
+        c.addElement(new Phrase("3", chs4));
+        c.setVerticalAlignment(Element.ALIGN_MIDDLE); // 5
+        c.setHorizontalAlignment(Element.ALIGN_CENTER); // 1
+        t.addCell(c);
+
+
+        cell = new PdfPCell(t);
+
+        table.addCell(cell);
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("333", chs4));
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE); // 5
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER); // 1
+        table.addCell(cell);
+
+
+        document.add(table);
+        document.close();
+    }
 
         /**
          * 根據數據生成PDF
@@ -694,7 +942,7 @@ public class PDFChildImmunizationHelper {
     public void generatePdf1() throws Exception {
         Document doc = new Document();
 
-        File file = new File("C:\\Users\\Administrator\\Desktop\\临时文件夹\\12.pdf");
+        File file = new File("C:\\Users\\Administrator\\Desktop\\临时文件夹\\112.pdf");
         PdfWriter.getInstance(doc, new FileOutputStream(file));
         doc.open();
         PdfPTable table = new PdfPTable(4);

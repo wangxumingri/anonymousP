@@ -6,24 +6,24 @@
 
     <!--3.解决中文乱码过滤器 -->
     <!--<filter>-->
-        <!--<filter-name>characterEncodingFilter</filter-name>-->
-        <!--<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>-->
-        <!--<init-param>-->
-            <!--<param-name>encoding</param-name>-->
-            <!--<param-value>UTF-8</param-value>-->
-        <!--</init-param>-->
+    <!--<filter-name>characterEncodingFilter</filter-name>-->
+    <!--<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>-->
+    <!--<init-param>-->
+    <!--<param-name>encoding</param-name>-->
+    <!--<param-value>UTF-8</param-value>-->
+    <!--</init-param>-->
     <!--</filter>-->
     <!--<filter-mapping>-->
-        <!--<filter-name>characterEncodingFilter</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
+    <!--<filter-name>characterEncodingFilter</filter-name>-->
+    <!--<url-pattern>/*</url-pattern>-->
     <!--</filter-mapping>-->
     <!--<context-param>-->
-        <!--<param-name>contextConfigLocation</param-name>-->
-        <!--<param-value>classpath:spring/applicationContext.xml</param-value>-->
+    <!--<param-name>contextConfigLocation</param-name>-->
+    <!--<param-value>classpath:spring/applicationContext.xml</param-value>-->
     <!--</context-param>-->
     <!--&lt;!&ndash; 配置监听器 &ndash;&gt;-->
     <!--<listener>-->
-        <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+    <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
     <!--</listener>-->
 
     <!-- 1.前端控制器（加载classpath:springmvc.xml 服务器启动创建servlet） -->
