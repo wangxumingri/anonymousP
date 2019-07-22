@@ -1,6 +1,7 @@
 package com.wxss.redisdemo.jackson;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wxss.redisdemo.Goods;
 
@@ -20,17 +21,48 @@ import java.util.Date;
  *      3.有没有统一的方式
  */
 public class JacksonDemo {
+    private static  ObjectMapper objectMapper = new ObjectMapper();
     public static void main(String[] args) throws IOException {
-        Goods goods = new Goods(null,59,new Date());
-        System.out.println("序列化前："+goods); // 序列化前：Goods(name=书包, price=59, produceDate=Wed Jul 10 12:02:46 CST 2019)
+        Goods goods = new Goods("笔记本", 100, new Date());
 
+        withoutConfigure(goods);
+        System.out.println("******************");
+        withConfigure(goods);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonStr = objectMapper.writeValueAsString(goods);
-        System.out.println("序列化后:"+jsonStr);// 序列化后:{"name":"书包","price":59,"produceDate":"2019-07-10  12:02:46"}
+    }
 
-
-        goods = objectMapper.readValue(jsonStr, Goods.class);
-        System.out.println("反序列化:"+goods);// 序列化前：Goods(name=书包, price=59, produceDate=Wed Jul 10 12:02:46 CST 2019)
+    public static void withoutConfigure(Goods goods){
+        try {
+            System.out.println("序列化前:"+goods);
+            // 序列化
+            String jsonStr = objectMapper.writeValueAsString(goods);
+            System.out.println("序列化后:"+jsonStr);
+            // 反序列化
+            goods = objectMapper.readValue(jsonStr, Goods.class);
+            System.out.println("反序列化:"+goods);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void withConfigure(Goods goods){
+        try {
+            System.out.println("序列化前:"+goods);
+            // 控制在反序列化时，如果字符串中出现实体类中无法映射（不存在，或者没有setter和其他处理方法）的字段时，是否抛出异常
+            // 默认为true
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            // 序列化
+            String jsonStr = objectMapper.writeValueAsString(goods);
+            // 加了一个pojo中 没有的 count字段，上述配置为true时，会抛异常
+            // com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException:
+            // Unrecognized field "count" (class com.wxss.redisdemo.Goods),
+            // not marked as ignorable (3 known properties: "price", "name", "produceDate"])
+            String str = "{\"name\":\"笔记本\",\"price\":100,\"produceDate\":\"2019-07-22  09:22:23\",\"count\":\"111\"}";
+            System.out.println("序列化后:"+jsonStr);
+            // 反序列化
+            goods = objectMapper.readValue(str, Goods.class);
+            System.out.println("反序列化:"+goods);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
