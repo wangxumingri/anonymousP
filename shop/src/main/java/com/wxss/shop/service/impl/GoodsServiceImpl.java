@@ -15,7 +15,7 @@ import java.util.List;
 @Transactional
 public class GoodsServiceImpl implements GoodsServiceI {
 
-//    @Resource(name = "goodsMapper")
+    //    @Resource(name = "goodsMapper")
 //    private GoodsMapper goodsMapper;
     @Autowired
     private GoodsMapper goodsMapper;
@@ -34,13 +34,13 @@ public class GoodsServiceImpl implements GoodsServiceI {
     @Override
     public void updateCount() {
         Goods lx = goodsMapper.selectByPrimaryKey(1);
-        lx.setCount(lx.getCount()+50);
+        lx.setCount(lx.getCount() + 50);
         goodsMapper.updateByPrimaryKey(lx);
         // 异常
-        int a = 1/0;
+        int a = 1 / 0;
 
         Goods hp = goodsMapper.selectByPrimaryKey(2);
-        hp.setCount(hp.getCount()-50);
+        hp.setCount(hp.getCount() - 50);
         goodsMapper.updateByPrimaryKey(hp);
     }
 }

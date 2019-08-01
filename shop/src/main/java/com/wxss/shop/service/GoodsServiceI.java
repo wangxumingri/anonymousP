@@ -8,12 +8,14 @@ import java.util.List;
 public interface GoodsServiceI {
     /**
      * 查询所有
+     *
      * @return
      */
     List<Goods> findAll();
 
     /**
      * 根据商品名查询
+     *
      * @param goodsName 商品名
      * @return
      */

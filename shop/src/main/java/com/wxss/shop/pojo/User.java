@@ -1,8 +1,9 @@
 package com.wxss.shop.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable {
     private Integer id;
 
     private String username;
@@ -16,6 +17,16 @@ public class User {
     private Date createTime;
 
     private Date updateTime;
+
+    private Goods goods;
+
+    public Goods getGoods() {
+        return goods;
+    }
+
+    public void setGoods(Goods goods) {
+        this.goods = goods;
+    }
 
     public Integer getId() {
         return id;
@@ -71,5 +82,19 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", phone=" + phone +
+                ", email='" + email + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", goods=" + goods +
+                '}';
     }
 }

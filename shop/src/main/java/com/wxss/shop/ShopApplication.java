@@ -10,10 +10,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @SpringBootApplication
 @MapperScan("com.wxss.shop.mapper")
-public class ShopApplication {
+public class
+ShopApplication {
 
     @Bean
-    public Object testBean(PlatformTransactionManager platformTransactionManager){
+    public Object testBean(PlatformTransactionManager platformTransactionManager) {
         System.out.println(">>>>>>>>>>" + platformTransactionManager.getClass().getName());
         return new Object();
     }

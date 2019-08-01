@@ -2,6 +2,7 @@ package com.wxss.shop.mapper;
 
 import com.wxss.shop.pojo.User;
 import com.wxss.shop.pojo.UserExample;
+
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;

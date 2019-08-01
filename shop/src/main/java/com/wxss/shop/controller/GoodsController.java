@@ -17,17 +17,17 @@ public class GoodsController {
     @Autowired
     private GoodsServiceI goodsService;
 
-    @GetMapping(value = "/findAll",produces = "application/json;charset=UTF-8")
-    public List<Goods> findAll(){
+    @GetMapping(value = "/findAll", produces = "application/json;charset=UTF-8")
+    public List<Goods> findAll() {
         List<Goods> goodsList = goodsService.findAll();
 
-        if (CollectionUtils.isNotEmpty(goodsList)){
+        if (CollectionUtils.isNotEmpty(goodsList)) {
             for (Goods goods : goodsList) {
                 System.out.println(goods.getCreateTime());
             }
 
             return goodsList;
-        }else {
+        } else {
             return null;
         }
     }
